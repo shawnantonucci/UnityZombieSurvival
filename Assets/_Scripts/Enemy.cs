@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Vector3 startingPosition;
-    private Vector3 roamPosition;
-
-    private void Start()
+    [SerializeField]
+    public class EnemyStats
     {
-        startingPosition = transform.position;
-        roamPosition = GetRoamingPosition();
+        public int Health = 100;
     }
 
-    private void Update()
+    public Player player;
+
+    public EnemyStats stats = new EnemyStats();
+
+    public void DamageEnemy(int damage)
     {
-        
+        stats.Health -= damage;
+        if(stats.Health <= 0)
+        {
+            GameManager.KillEnemy(gameObject);
+        }
     }
 
-    private void MoveToPos()
+    private void OnCollisionStay2D(Collision2D collision)
     {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("hit");
+            collision.gameObject.GetComponent<Player>().TakeDamage(2);
+            
+        }
 
-    }
-
-    private Vector3 GetRoamingPosition()
-    {
-        return startingPosition + GetRandoDir() * Random.Range(10f, 70f);
-    }
-
-
-    private Vector3 GetRandoDir()
-    {
-        return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f,1f)).normalized;
     }
 }
