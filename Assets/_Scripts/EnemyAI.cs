@@ -27,7 +27,7 @@ public class EnemyAI : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, .5f);
     }
 
-    public void UpdatePath()
+    void UpdatePath()
     {
         if(seeker.IsDone())
             seeker.StartPath(rb.position, target.position, OnPathComplete);
