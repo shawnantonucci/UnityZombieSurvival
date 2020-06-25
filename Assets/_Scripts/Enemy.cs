@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     public class EnemyStats
     {
-        public int Health = 100;
+        public int Health = 40;
     }
 
     public Player player;
@@ -32,5 +32,16 @@ public class Enemy : MonoBehaviour
             
         }
 
+    }
+
+    public void TakeDamage(int damage)
+    {
+        stats.Health -= damage;
+
+
+        if (stats.Health <= 0)
+        {
+            GameManager.KillEnemy(gameObject);
+        }
     }
 }
