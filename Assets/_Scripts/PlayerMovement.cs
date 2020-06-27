@@ -12,11 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public Camera cam;
     public Transform playerGFX;
 
-    Vector2 movement;
-    Vector2 mousePos;
+    public static Vector2 movement;
 
-    private Vector2 lookDirection;
-    private float angle;
 
     private void Start()
     {
@@ -26,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Vector3 characterScale = transform.localScale;
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
@@ -37,7 +35,15 @@ public class PlayerMovement : MonoBehaviour
             anim.SetFloat("Speed", 0f);
         }
 
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        if(movement.x == -1)
+        {
+            characterScale.x = -1f;
+        } else if(movement.x == 1)
+        {
+            characterScale.x = 1f;
+        }
+
+        //transform.localScale = characterScale;
     }
 
     void FixedUpdate()

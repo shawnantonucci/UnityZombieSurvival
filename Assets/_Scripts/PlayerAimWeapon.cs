@@ -60,6 +60,14 @@ public class PlayerAimWeapon : MonoBehaviour {
             playerScale.x = +7f;
             localScale.y = +1f;
         }
+        if (PlayerMovement.movement.x == -1)
+        {
+            localScale.x = +1f;
+        }
+        else if (PlayerMovement.movement.x == 1)
+        {
+            localScale.x = +1f;
+        }
         playerTransform.localScale = playerScale;
         aimTransform.localScale = localScale;
     }
