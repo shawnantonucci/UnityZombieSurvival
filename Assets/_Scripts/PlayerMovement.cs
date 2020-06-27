@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Animator anim;
     public float moveSpeed = 5f;
 
     public Rigidbody2D rb;
@@ -17,12 +18,24 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lookDirection;
     private float angle;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     void Update()
     {
         Vector3 characterScale = transform.localScale;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+        if(movement.x == 1 || movement.x == -1 || movement.y == 1 || movement.y == -1)
+        {
+            anim.SetFloat("Speed", moveSpeed);
+        } else if(movement.x == 0 )
+        {
+            anim.SetFloat("Speed", 0f);
+        }
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
     }
@@ -30,10 +43,5 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-
-        //lookDirection = mousePos - rb.position;
-        //angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-        //rb.rotation = angle;
-
     }
 }
